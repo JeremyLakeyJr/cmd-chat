@@ -93,6 +93,24 @@ every "secure" messenger still stores metadata somewhere. this doesn't. it's jus
 
 ## install
 
+quick start scripts:
+
+```bash
+./start.sh serve 0.0.0.0 3000 --password mysecret
+./start.sh connect SERVER_IP 3000 username mysecret
+```
+
+windows:
+
+```bat
+start.bat serve 0.0.0.0 3000 --password mysecret
+start.bat connect SERVER_IP 3000 username mysecret
+```
+
+the scripts create `venv`, install `requirements.txt` when needed, then run the chat command you pass in.
+
+manual setup:
+
 ```bash
 git clone https://github.com/emilycodestar/cmd-chat.git
 cd cmd-chat
@@ -110,13 +128,13 @@ python -m venv venv ; .\venv\Scripts\activate ; pip install -r requirements.txt
 start server:
 
 ```bash
-python cmd_chat.py serve 0.0.0.0 3000 --password mysecret
+./start.sh serve 0.0.0.0 3000 --password mysecret
 ```
 
 connect:
 
 ```bash
-python cmd_chat.py connect SERVER_IP 3000 username mysecret
+./start.sh connect SERVER_IP 3000 username mysecret
 ```
 
 ![Example](example.gif)
