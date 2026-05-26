@@ -210,7 +210,7 @@ class Client:
             self.connected = False
 
     async def input_loop(self) -> None:
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         while self.running:
             try:
                 text = await loop.run_in_executor(None, input)
@@ -221,6 +221,11 @@ class Client:
                     encrypted = self.room_fernet.encrypt(text.encode()).decode()
                     await self.send_json({"type": "message", "text": encrypted})
             except (EOFError, KeyboardInterrupt):
+                self.running = False
+                break
+            except OSError:
+                # Windows raises WinError 64 (network name no longer available)
+                # when the server closes the connection while we're draining.
                 self.running = False
                 break
             except asyncio.CancelledError:
